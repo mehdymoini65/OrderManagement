@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OrderManagement.Orders.Entities;
+using OrderManagement.Products.Entities;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -11,7 +13,8 @@ public class OrderManagementDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
-    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<Product> Products { get; set; }
 
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
      * and replaced them for this DbContext. This allows you to perform JOIN
@@ -25,7 +28,7 @@ public class OrderManagementDbContext :
      */
 
     //Identity
-    
+
 
     public OrderManagementDbContext(DbContextOptions<OrderManagementDbContext> options)
         : base(options)
@@ -37,16 +40,12 @@ public class OrderManagementDbContext :
     {
         base.OnModelCreating(builder);
 
-        /* Include modules to your migration db context */
-        
-
-        /* Configure your own tables/entities inside here */
-
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(OrderManagementConsts.DbTablePrefix + "YourEntities", OrderManagementConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<Order>(b =>
+        {
+            b.ToTable("Orders");
+            b.HasMany(o => o.OrderItems)
+             .WithOne()
+             .HasForeignKey("OrderId");
+        });
     }
 }

@@ -22,7 +22,7 @@ public class OrderManagementDbContextFactory : IDesignTimeDbContextFactory<Order
     private static IConfigurationRoot BuildConfiguration()
     {
         var builder = new ConfigurationBuilder()
-            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../OrderManagement.DbMigrator/"))
+            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../OrderManagement.HttpApi.Host/"))
             .AddJsonFile("appsettings.json", optional: false);
 
         return builder.Build();
