@@ -9,10 +9,7 @@ public class OrderItem : Entity<Guid>
 {
     public OrderItem(Guid productId, Guid orderId, int qantity, int price)
     {
-        ProductId = productId;
-        OrderId = orderId;
-        Qantity = qantity;
-        Price = price;
+
     }
 
     public Guid ProductId { get; private set; }
