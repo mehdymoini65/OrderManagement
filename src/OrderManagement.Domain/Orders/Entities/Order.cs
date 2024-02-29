@@ -11,7 +11,7 @@ public class Order : AuditedAggregateRoot<Guid>
 {
     private List<OrderItem> _orderItems = new List<OrderItem>();
 
-    public IReadOnlyList<OrderItem> OrderItems => _orderItems;
+    public List<OrderItem> OrderItems => _orderItems;
     public int TotalPrice { get; private set; }
 
     public void AddOrderItem(OrderItem orderItem)
