@@ -27,6 +27,8 @@ using Volo.Abp.Swashbuckle;
 namespace OrderManagement;
 
 [DependsOn(
+
+
     typeof(AbpAutofacModule),
     typeof(AbpAspNetCoreMultiTenancyModule),
     typeof(OrderManagementApplicationModule),
