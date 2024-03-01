@@ -2,6 +2,7 @@
 
 namespace OrderManagement.Orders.Dtos;
 
+[Serializable]
 public record OrderItemDto
 {
     public Guid ProductId { get; set; }

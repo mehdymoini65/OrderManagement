@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration.Annotations;
 using OrderManagement.Orders.Dtos;
 using OrderManagement.Orders.Entities;
 using OrderManagement.Orders.ValueObjects;
@@ -11,9 +12,10 @@ public class OrderAutoMapperProfiles : Profile
     public OrderAutoMapperProfiles()
     {
         CreateMap<Order, OrderDto>();
-        CreateMap<Order, OrderListItemDto>();
-        CreateMap<OrderItemDto, OrderItem>();
+        CreateMap<Order, OrderListDto>();
         CreateMap<OrderItem, OrderItemDto>();
+        CreateMap<OrderItemDto, OrderItem>()
+            .ForMember(dest => dest.OrderId, opt => opt.Ignore()); 
         CreateMap<CreateAndUpdateOrderDto, Order>();
     }
 }

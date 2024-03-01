@@ -10,7 +10,7 @@ using Volo.Abp.Application.Services;
 
 namespace OrderManagement.Orders;
 
-public class OrderAppService : CrudAppService<Order, OrderDto, OrderListItemDto, Guid, OrderPagedAndSortedResultRequestDto, CreateAndUpdateOrderDto, CreateAndUpdateOrderDto>, IOrderAppService
+public class OrderAppService : CrudAppService<Order, OrderDto, OrderListDto, Guid, OrderPagedAndSortedResultRequestDto, CreateAndUpdateOrderDto, CreateAndUpdateOrderDto>, IOrderAppService
 {
     private readonly IOrderRepository _orderRepository;
     public OrderAppService(IOrderRepository orderRepository) : base(orderRepository)
@@ -18,20 +18,19 @@ public class OrderAppService : CrudAppService<Order, OrderDto, OrderListItemDto,
         _orderRepository = orderRepository;
     }
 
-
     [HttpPost]
-    [Route("api/orders/{orderId}/items")]
+    [Route("api/app/order/{orderId}/additem")]
     public async Task AddOrderItem(Guid orderId, OrderItemDto orderItemDto)
     {
-        var order = await _orderRepository.GetAsync(orderId);
+        var order = await _orderRepository.GetAsync(orderId, true);
         if (order == null)
         {
             throw new Exception($"Order with ID {orderId} not found.");
         }
 
         var orderItem = new OrderItem(
+            orderItemDto.ProductId,
             Guid.NewGuid(),
-            order.Id,
             orderItemDto.Quantity,
             orderItemDto.Price
         );
