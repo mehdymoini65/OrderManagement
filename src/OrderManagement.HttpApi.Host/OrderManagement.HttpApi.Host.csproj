@@ -27,7 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\OrderManagement.Application\OrderManagement.Application.csproj" />
     <ProjectReference Include="..\OrderManagement.EntityFrameworkCore\OrderManagement.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\OrderManagement.HttpApi\OrderManagement.HttpApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

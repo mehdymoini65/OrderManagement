@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrderManagement.Orders.Entities;
+using OrderManagement.Orders.ValueObjects;
 using OrderManagement.Products.Entities;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
@@ -14,6 +15,8 @@ public class OrderManagementDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
 
     public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+
     public DbSet<Product> Products { get; set; }
 
     /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
@@ -44,8 +47,24 @@ public class OrderManagementDbContext :
         {
             b.ToTable("Orders");
             b.HasMany(o => o.OrderItems)
+
              .WithOne()
              .HasForeignKey("OrderId");
         });
+
+
+        // Configure OrderItem
+        builder.Entity<OrderItem>(entity =>
+        {
+            entity.ToTable("OrderItems");
+            entity.HasKey(oi => oi.Id);
+
+            // Configure foreign key relationship with Product
+            entity.HasOne(oi => oi.Product)
+                  .WithMany()
+                  .HasForeignKey(oi => oi.ProductId)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
+
     }
 }

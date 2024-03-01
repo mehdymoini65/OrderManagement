@@ -11,8 +11,17 @@ public class Order : AuditedAggregateRoot<Guid>
 {
     private List<OrderItem> _orderItems = new List<OrderItem>();
 
-    public List<OrderItem> OrderItems => _orderItems;
-    public int TotalPrice { get; private set; }
+    public List<OrderItem> OrderItems
+    {
+        get => _orderItems;
+        set
+        {
+            _orderItems = value;
+            CalculateTotalPrice();
+        }
+    }
+
+    public int TotalPrice {get; private set;}
 
     public void AddOrderItem(OrderItem orderItem)
     {
@@ -28,6 +37,6 @@ public class Order : AuditedAggregateRoot<Guid>
 
     private void CalculateTotalPrice()
     {
-        TotalPrice = _orderItems.Sum(t => t.Qantity * t.Price);
+        TotalPrice = _orderItems.Sum(t => t.Quantity * t.Price);
     }
 }
